@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Will You Be My Valentine?</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      height: 100vh;
+      overflow: hidden;
+      background: radial-gradient(circle at top, #FDEEF5, #fad0c4);
+      /* Updated background color */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Cinematic intro */
+    .intro {
+      position: fixed;
+      inset: 0;
+      background: black;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      letter-spacing: 2px;
+      z-index: 50;
+      flex-direction: column;
+    }
+
+    .typing {
+      border-right: 3px solid white;
+      white-space: nowrap;
+      overflow: hidden;
+      width: 0;
+      animation: typing 4s steps(40, end) forwards, blink 0.8s infinite;
+    }
+
+    @keyframes typing {
+      to {
+        width: 22ch;
+      }
+    }
+
+    @keyframes blink {
+      50% {
+        border-color: transparent;
+      }
+    }
+
+    .countdown {
+      margin-top: 20px;
+      font-size: 3rem;
+      opacity: 0;
+      animation: showCountdown 2s ease forwards 4s;
+    }
+
+    @keyframes showCountdown {
+      to {
+        opacity: 1;
+      }
+    }
+
+    .container {
+      text-align: center;
+      color: white;
+      position: relative;
+      z-index: 5;
+      display: none;
+      /* Hidden initially */
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 40px;
+      text-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+      animation: glow 2s infinite alternate;
+    }
+
+    .header-img {
+      width: 300px;
+      max-width: 90%;
+      height: auto;
+      margin-bottom: 20px;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      animation: float 4s ease-in-out infinite;
+    }
+
+    @keyframes glow {
+      from {
+        text-shadow: 0 0 10px #fff;
+      }
+
+      to {
+        text-shadow: 0 0 25px #ff4d6d;
+      }
+    }
+
+    .btn {
+      padding: 15px 35px;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      position: absolute;
+      transition: all 0.3s ease;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    #yesBtn {
+      background: #ff4d6d;
+      color: white;
+      left: -90px;
+    }
+
+    #noBtn {
+      background: #6c757d;
+      color: white;
+      left: 90px;
+    }
+
+    /* Gallery */
+    .gallery {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      /* Changed from center to allow scrolling */
+      height: 100vh;
+      width: 100%;
+      background: black;
+      position: fixed;
+      inset: 0;
+      z-index: 40;
+      overflow-y: auto;
+      /* Enable vertical scrolling */
+      padding: 40px 20px;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      width: 100%;
+      max-width: 1200px;
+      margin-bottom: 30px;
+    }
+
+    .gallery img {
+      width: 100%;
+      height: 260px;
+      object-fit: cover;
+      border-radius: 15px;
+      box-shadow: 0 10px 40px rgba(255, 255, 255, 0.2);
+      animation: float 6s ease-in-out infinite;
+      opacity: 0;
+      animation: fadeIn 1s ease forwards;
+    }
+
+    /* Stagger animations for a nice effect */
+    .gallery img:nth-child(1) {
+      animation-delay: 0.1s;
+    }
+
+    .gallery img:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+
+    .gallery img:nth-child(3) {
+      animation-delay: 0.3s;
+    }
+
+    .gallery img:nth-child(4) {
+      animation-delay: 0.4s;
+    }
+
+    .gallery img:nth-child(5) {
+      animation-delay: 0.5s;
+    }
+
+    .gallery img:nth-child(6) {
+      animation-delay: 0.6s;
+    }
+
+    .gallery img:nth-child(7) {
+      animation-delay: 0.7s;
+    }
+
+    .gallery img:nth-child(8) {
+      animation-delay: 0.8s;
+    }
+
+    .gallery img:nth-child(9) {
+      animation-delay: 0.9s;
+    }
+
+    .gallery img:nth-child(10) {
+      animation-delay: 1.0s;
+    }
+
+    @keyframes float {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+
+    .love-text {
+      color: white;
+      font-size: 2.5rem;
+      margin: 30px 0;
+      text-align: center;
+      width: 100%;
+      animation: fadeIn 2s ease forwards 1.2s;
+      opacity: 0;
+      /* Star hidden */
+      text-shadow: 0 0 15px #ff4d6d;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Falling hearts */
+    .heart {
+      position: fixed;
+      top: -20px;
+      color: #ff4d6d;
+      font-size: 20px;
+      animation: fall linear forwards;
+      z-index: 60;
+      pointer-events: none;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(110vh);
+        opacity: 0;
+      }
+    }
+
+    /* Fireworks */
+    .firework {
+      position: fixed;
+      width: 6px;
+      height: 6px;
+      background: gold;
+      border-radius: 50%;
+      animation: explode 1s ease-out forwards;
+      z-index: 70;
+    }
+
+    @keyframes explode {
+      to {
+        transform: scale(15);
+        opacity: 0;
+      }
+    }
+
+    /* Final YES screen */
+    .final-screen {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle, #000 20%, #1a001a);
+      color: white;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 80;
+      text-align: center;
+    }
+
+    .ring {
+      font-size: 4rem;
+      animation: ringPop 1.5s ease-out forwards, ringFloat 3s ease-in-out infinite 1.5s;
+    }
+
+    @keyframes ringPop {
+      from {
+        transform: scale(0);
+        opacity: 0;
+      }
+
+      to {
+        transform: scale(1.2);
+        opacity: 1;
+      }
+    }
+
+    @keyframes ringFloat {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-15px);
+      }
+    }
+
+    .yes-text {
+      font-size: 3rem;
+      margin-top: 20px;
+      animation: fadeIn 2s ease forwards;
+    }
+
+    .date-text {
+      margin-top: 10px;
+      font-size: 1.2rem;
+      opacity: 0.8;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="intro" id="intro">
+    <div class="typing">Tharun ❤️ Aswini</div>
+    <div class="countdown" id="countdown">10</div>
+  </div>
+
+  <div class="container" id="proposal">
+    <img src="header.png" class="header-img" alt="Love Illustration" />
+    <h1>Will You Be My Valentine? 💍</h1>
+    <button id="yesBtn" class="btn">Yes ❤️</button>
+    <button id="noBtn" class="btn">No 😢</button>
+  </div>
+
+  <div class="gallery" id="gallery">
+    <div class="love-text">Forever Starts With You ❤️</div>
+    <div class="gallery-grid">
+      <img src="photo1.jpg" alt="Our Memory 1" />
+      <img src="photo2.jpg" alt="Our Memory 2" />
+      <img src="photo3.jpg" alt="Our Memory 3" />
+      <img src="photo4.jpg" alt="Our Memory 4" />
+      <img src="photo5.jpg" alt="Our Memory 5" />
+      <img src="photo6.jpg" alt="Our Memory 6" />
+      <img src="photo7.jpg" alt="Our Memory 7" />
+      <img src="photo8.jpg" alt="Our Memory 8" />
+      <img src="photo9.jpg" alt="Our Memory 9" />
+      <img src="photo10.jpg" alt="Our Memory 10" />
+    </div>
+    <audio id="bgMusic" src="song.mp3" loop></audio>
+  </div>
+
+  <div class="final-screen" id="finalScreen">
+    <div class="ring">💍</div>
+    <div class="yes-text">She Said YES!</div>
+    <div class="date-text" id="dateText"></div>
+  </div>
+
+  <script>
+    const intro = document.getElementById('intro');
+    const countdownEl = document.getElementById('countdown');
+    const proposal = document.getElementById('proposal');
+    const noBtn = document.getElementById('noBtn');
+    const yesBtn = document.getElementById('yesBtn');
+    const gallery = document.getElementById('gallery');
+    const music = document.getElementById('bgMusic');
+    const finalScreen = document.getElementById('finalScreen');
+    const dateText = document.getElementById('dateText');
+
+    let count = 10;
+    const timer = setInterval(() => {
+      count--;
+      countdownEl.textContent = count;
+      if (count === 0) {
+        clearInterval(timer);
+        intro.style.display = 'none';
+        proposal.style.display = 'block';
+      }
+    }, 1000);
+
+    let noClickCount = 0;
+    let yesClickCount = 0;
+
+    function moveNoButton() {
+      const x = Math.random() * (window.innerWidth - noBtn.offsetWidth - 20);
+      const y = Math.random() * (window.innerHeight - noBtn.offsetHeight - 20);
+      noBtn.style.position = 'fixed';
+      noBtn.style.left = `${x}px`;
+      noBtn.style.top = `${y}px`;
+    }
+
+    function moveYesButton() {
+      const x = Math.random() * (window.innerWidth - yesBtn.offsetWidth - 20);
+      const y = Math.random() * (window.innerHeight - yesBtn.offsetHeight - 20);
+      yesBtn.style.position = 'fixed';
+      yesBtn.style.left = `${x}px`;
+      yesBtn.style.top = `${y}px`;
+    }
+
+    function startHearts() {
+      setInterval(() => {
+        const heart = document.createElement('div');
+        heart.className = 'heart';
+        heart.style.left = Math.random() * 100 + 'vw';
+        heart.style.animationDuration = 3 + Math.random() * 5 + 's';
+        heart.innerText = '❤️';
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 8000);
+      }, 300);
+    }
+
+    function startFireworks() {
+      for (let i = 0; i < 25; i++) {
+        setTimeout(() => {
+          const fw = document.createElement('div');
+          fw.className = 'firework';
+          fw.style.left = Math.random() * 100 + 'vw';
+          fw.style.top = Math.random() * 100 + 'vh';
+          document.body.appendChild(fw);
+          setTimeout(() => fw.remove(), 1000);
+        }, i * 120);
+      }
+    }
+
+    function showFinalScreen() {
+      gallery.style.display = 'none';
+      finalScreen.style.display = 'flex';
+
+      const today = new Date();
+      dateText.textContent = today.toDateString();
+    }
+
+    function showSecretMessage() {
+      const msg = document.createElement('div');
+      msg.textContent = "Aswini… from the moment you came into my life, everything became beautiful. I don’t just want today, I want forever with you. Will you truly be mine for life? ❤️";
+      msg.style.position = 'fixed';
+      msg.style.inset = '0';
+      msg.style.display = 'flex';
+      msg.style.alignItems = 'center';
+      msg.style.justifyContent = 'center';
+      msg.style.background = 'rgba(0,0,0,0.85)';
+      msg.style.color = 'white';
+      msg.style.fontSize = '1.8rem';
+      msg.style.textAlign = 'center';
+      msg.style.padding = '40px';
+      msg.style.zIndex = '75';
+      msg.style.opacity = '0';
+      msg.style.transition = 'opacity 2s ease';
+
+      document.body.appendChild(msg);
+
+      setTimeout(() => { msg.style.opacity = '1'; }, 100);
+      setTimeout(showFinalScreen, 6000); // Show final screen after reading message (6s delay)
+    }
+
+    function showGallery() {
+      proposal.style.display = 'none';
+      gallery.style.display = 'flex';
+      music.play();
+      startHearts();
+      startFireworks();
+
+      setTimeout(showSecretMessage, 4000);
+    }
+
+    noBtn.addEventListener('click', () => {
+      noClickCount++;
+      if (noClickCount < 21) moveNoButton();
+      else showGallery();
+    });
+
+    yesBtn.addEventListener('click', () => {
+      yesClickCount++;
+      if (yesClickCount < 21) moveYesButton();
+      else showGallery();
+    });
+  </script>
+</body>
+
+</html>
